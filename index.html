@@ -17,15 +17,15 @@
     <div id="app">
       <div v-if="confirmation_toggle">
         <div class="flex flex-col h-screen items-center justify-center">
-          <img
-            src="/assets/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
-            class="w-[300px]"
-          />
-          <h1 class="mb-4 mt-3 text-4xl font-bold text-slate-700 text-center">
-            Will you be my girlfriend ?
+          <img :src="img_url" class="w-[300px]" />
+          <h1
+            class="mb-4 mt-3 text-3xl md:text-4xl font-bold text-slate-700 text-center"
+          >
+            {{ question_text }}
           </h1>
           <div
             class="flex flex-col flex-wrap justify-center items-center gap-4 md:flex-row"
+            v-if="asking_button"
           >
             <button
               type="button"
@@ -47,9 +47,11 @@
       </div>
       <div v-else>
         <div class="flex flex-col h-screen items-center justify-center">
-          <img src="/assets/bear-kiss-bear-kisses.gif" class="w-[300px]" />
-          <h1 class="mb-4 mt-3 text-5xl font-bold text-slate-700 text-center">
-            Okayy Yeyyy 🥰😘
+          <img src="assets/tkthao219-bubududu.gif" class="w-[300px]" />
+          <h1
+            class="mb-4 mt-3 text-3xl md:text-4xl font-bold text-slate-700 text-center"
+          >
+            I thought it was just a joke
           </h1>
         </div>
       </div>
@@ -60,11 +62,17 @@
       Vue.createApp({
         methods: {
           changeConfirmation() {
-            this.font_size_yes += 20;
+            this.font_size_yes -= 2;
             this.confirmation_number += 1;
 
             if (this.confirmation_number == this.confirmations.length) {
               this.confirmation_number = 0;
+            }
+
+            if (this.confirmation_number == 8) {
+              this.asking_button = false;
+              this.question_text = "Okay Then ... 😔💔";
+              this.img_url = "assets/love-you.gif";
             }
 
             this.confirmation_text =
@@ -73,6 +81,9 @@
         },
         data() {
           return {
+            question_text: "Will you be my girlfriend ?",
+            img_url: "assets/cute-love-bear-roses-ou7zho5oosxnpo6k.gif",
+            asking_button: true,
             font_size_yes: 16,
             confirmation_number: 0,
             confirmations: [
